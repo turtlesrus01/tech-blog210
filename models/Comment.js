@@ -24,7 +24,7 @@ Comment.init(
       allowNull: false,
       defaultValue: DataTypes.NOW,
     },
-    //user_id
+    //user_id ties to User model
     user_id: {
       type: DataTypes.INTEGER,
       references: {
@@ -32,6 +32,7 @@ Comment.init(
         key: 'id',
       }
     },
+    //blog_id ties to Blog Model
     blog_id: {
       type: DataTypes.INTEGER,
       references: {
