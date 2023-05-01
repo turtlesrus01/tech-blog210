@@ -5,7 +5,6 @@ const session = require('express-session');
 const exphbs = require('express-handlebars');
 const routes = require('./controllers');
 const helpers = require('./utils/helpers');
-const sequelize = require('./config/connection')
 
 //import sequelize
 const sequelize = require('./config/connection');
@@ -19,16 +18,29 @@ const hbs = exphbs.create({helpers});
 //session options
 const sess = {
   secret: 'secret-secret',
-  resave: 'false',
-  saveUninitialized: 'false'
+  //cookie storage for client-data
+  cookie: {
+    maxAge: 100000,
+    httpOnly: true,
+    secure:false,
+    sameSite: 'strict'
+  },
+  resave: false,
+  saveUninitialized: false,
+  //opening session storage data
+  store: new SequelizeStore({
+    db: sequelize
+  })
 };
 //session initialization
 app.use(session(sess));
 //handlebars initialization
 app.engine('handlebars', hbs.engine);
-
+//Express middleware Json parser 
 app.use(express.json());
+//Express middleware URL parser
 app.use(express.urlencoded({extended: true }));
+//Express middleware to serve static files from directory
 app.use(express.static(path.join(__dirname, 'public')));
 //connect routes to express
 app.use(routes);
