@@ -1,6 +1,6 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
-const { title } = require('process');
+
 //Import model middleware
 class Blog extends Model {};
 //Blog init
@@ -46,4 +46,4 @@ Blog.init(
   }
 );
 
-module.export = Blog;
+module.exports = Blog;
