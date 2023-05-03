@@ -19,11 +19,11 @@ router.get('/', withAuth, async (req, res) => {
     res.status(500).json(err);
   }
 });
-//Get route for login
+//Get route for login 
 router.get('/login', (req, res) => {
+  //if user is not logged in, redirect to root
   if (req.session.logged_in) {
-    res.redirect('/');
-    return;
+    return res.redirect('/');
   }
 
   res.render('login');

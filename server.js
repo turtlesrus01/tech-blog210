@@ -4,7 +4,6 @@ const express = require('express');
 const session = require('express-session');
 const exphbs = require('express-handlebars');
 const routes = require('./controllers');
-const helpers = require('./utils/helpers');
 
 //import sequelize
 const sequelize = require('./config/connection');
@@ -14,7 +13,7 @@ const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const app = express();
 const PORT = process.env.PORT || 3001;
 //handlebars initialization
-const hbs = exphbs.create({helpers});
+const hbs = exphbs.create();
 //session options
 const sess = {
   secret: 'secret-secret',
@@ -34,8 +33,12 @@ const sess = {
 };
 //session initialization
 app.use(session(sess));
+
 //handlebars initialization
 app.engine('handlebars', hbs.engine);
+//connect express to handlebars engine 
+app.set('view engine', 'handlebars');
+
 //Express middleware Json parser 
 app.use(express.json());
 //Express middleware URL parser
